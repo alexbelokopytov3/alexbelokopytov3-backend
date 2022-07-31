@@ -17,8 +17,13 @@ from django.contrib import admin
 from django.urls import path
 
 from home.views import HomeView
+from users.views import Authentication
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomeView)
+    path('', HomeView, name = 'HomeView'),
+    path('authentication/', Authentication, name = 'Authentication'),
 ]
+
