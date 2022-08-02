@@ -36,8 +36,16 @@
 
       <div class="col-md-3 text-end">
         {% comment %} <a href='{% url 'LoginView' %}'><button type="button"
-            class="btn btn-outline-primary me-2">Войти</button></a> {% endcomment %}
+        class="btn btn-outline-primary me-2">Войти</button></a> {% endcomment %}
+        {% if user.is_anonymous %}
         <a href='{% url 'Authentication' %}'><button type="button" class="btn btn-primary">Log in</button></a>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <a href='{% url 'Edit' %}'><button type="button" class="btn btn btn btn-outline-secondary me-2">Hello, {{ user.get_short_name }}</button></a>
+        <a href='{% url 'Logout' %}'><button type="button" class="btn btn btn-danger me-2">Log out</button></a>
+        {% endif %}
+
       </div>
     </header>
   </div>
