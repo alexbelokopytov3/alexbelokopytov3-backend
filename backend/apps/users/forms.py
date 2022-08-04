@@ -4,18 +4,22 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import Profile
 
+
 class UserEdit(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
         help_texts = {
             'username': None,
         }
 
 class ProfileEdit(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    photo = forms.ImageField(widget=forms.FileInput)
     class Meta:
         model = Profile
         fields = ('phone', 'date_of_birth', 'photo')
+        
 
 class Login(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-styling'}))

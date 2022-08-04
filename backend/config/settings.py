@@ -59,6 +59,7 @@ THIRD_PARTY = [
 LOCAL_APPS = [
     'home',
     'users',
+    'polls',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY + LOCAL_APPS
