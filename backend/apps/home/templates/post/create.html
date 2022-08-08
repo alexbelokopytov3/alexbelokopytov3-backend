@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% load poll_extras %}
+<div class="container">
+    <h1>Create post</h1>
+    <p>You can create your post using the following form:</p>
+</div>
+<form action="." method="post" enctype="multipart/form-data">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-6 mb-4">
+                        {{ form.title_post|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-6 mb-4">
+                        {{ form.category_post|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Text</label>
+                    <div class="col-sm-6 mb-4 ">
+                        {{ form.text_post|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Photo</label>
+                    <div class="col-sm-8 mb-4">
+                        {{ form.image_posts }}
+                    </div>
+                </div>
+
+                {% csrf_token %}
+                <div class="col-sm-1 mb-4 ">
+                    <input type="submit" value="Save" class="form-control">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

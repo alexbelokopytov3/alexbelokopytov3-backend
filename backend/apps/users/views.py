@@ -54,7 +54,6 @@ def Edit(request):
         profile_form = ProfileEdit(instance=request.user.profile, data=request.POST, files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-            
             profile_form.save()
             return redirect('Edit')
     else:

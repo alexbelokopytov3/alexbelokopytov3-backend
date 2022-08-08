@@ -2,9 +2,10 @@
 {% block content %}
 {% load poll_extras %}
 {% load static %}
-
-<h1>Edit your account</h1>
+<div class="container">
+<h1>Edit account</h1>
 <p>You can edit your account using the following form:</p>
+</div>
 <form action="." method="post" enctype="multipart/form-data">
     {% comment %} {{ user_form.as_p }}
     {{ profile_form.as_p }} {% endcomment %}
@@ -71,8 +72,10 @@
 
     </div>
     <div class="col-3">
+        {% if user.profile.photo.url %}
         <p>Your photo:</p>
         <img src="{{user.profile.photo.url}}" width="290"  class="mh-75" >
+        {% endif %}
     </div>
 </div>
 </div>

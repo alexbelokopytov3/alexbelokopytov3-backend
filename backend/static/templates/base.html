@@ -16,7 +16,7 @@
   </script>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
 
   {% comment %} Header {% endcomment %}
   <div class="container">
@@ -31,13 +31,14 @@
         <span class="fs-4">News</span>
       </a>
 
-      {% comment %} <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
-      </ul> {% endcomment %}
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          
+        <li><a href="{% url 'HomeView' %}" class="nav-link px-2 link-secondary">All</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Science</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Economics</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Sport</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Other</a></li>
+      </ul>
 
       <div class="col-md-3 text-end">
         {% comment %} <a href='{% url 'LoginView' %}'><button type="button"
@@ -53,7 +54,7 @@
           </button>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'Edit' %}">Edit profile</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{% url 'post_create' %}">Create post</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
             <li>
@@ -69,17 +70,15 @@
   </div>
 
   {% comment %} Main container {% endcomment %}
-  <main class="container">
-    <div class="row">
-      <div class="col">
+  <main class="flex-shrink-0">
         {% block content %}
         {% endblock %}
-      </div>
-    </div>
+  </main>
+
 
     {% comment %} Footer {% endcomment %}
-    <div class="container">
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="container ">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top mt-auto">
         <div class="col-md-4 d-flex align-items-center">
           <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
             <svg class="bi" width="30" height="24" viewBox="0 0 16 15">

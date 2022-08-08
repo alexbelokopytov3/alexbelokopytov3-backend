@@ -1,27 +1,39 @@
 {% extends 'base.html' %}
 
+
+
 {% block content %}
+{% for post in posts %}
 
-<div class="px-5 pt-1 my-4 border-bottom">
-  <h1 class="display-6 fw-bold">Главная новость</h1>
-  <div class="col-lg-10 mx-auto" style="text-align: justify;">
-    <p class="lead mb-4">Samsung выпустила несколько 200-мегапиксельных датчиков — сначала был представлен ISOCELL HP1 в
-      2021 году, а теперь компания добралась до ISOCELL HP3 в текущем году. Можно было бы предположить, когда корейская
-      компания перестанет продвигать эти датчики с большим количеством мегапикселей, но, согласно последним сведениям и
-      некоторым расчетам, Samsung только начинает работать в этом направлении и может выпустить датчик на 450 Мп с
-      брендом Hexapixel в будущем. Подача заявки на товарный знак Hexapixel вызвала новые слухи, особенно в связи с тем,
-      что Samsung может работать над новой камерой для будущего флагмана Galaxy S23 Ultra. Учитывая, что Galaxy S22
-      Ultra является единственным представителем линейки текущего поколения с высококачественной основной камерой на 200
-      Мп, можно предположить, что Samsung объединит свои ресурсы для разработки нового сенсора для топового смартфона
-      следующего года.
-    </p>
-  </div>
-  <div class="overflow-hidden" style="max-height: 30vh;">
-    <div class="container text-center px-5">
-      <img src="/" class="img-fluid border rounded-3 shadow-lg mb-4 center" alt="lsad" width="700" height="500"
-        loading="lazy">
+
+<div class="container d-flex justify-content-center">
+
+    {% comment %} <div class="px-5 pt-1 my-4 border-bottom mt-5"> {% endcomment %}
+        <div class="w-75 ">
+            <h2 class="display-8 "><a href="{% url 'post_detail' post.id %}"
+                    style="text-decoration: none;">{{ post.title_post }}</a></h2>
+            <figcaption class="blockquote-footer mt-0">
+                {{ post.create_date_post }}
+            </figcaption>
+            <div class="col-lg-10 mx-auto" style="text-align: justify;">
+                <p class="lead mb-4">{{ post.text_post|linebreaksbr|stringformat:".200s..."  }}</p>
+            </div>
+
+            {% if post.image_posts %}
+            <div class="overflow-hidden">
+                <div class="container text-center px-5">
+                    <img src="{{post.image_posts.url}}" class="img-fluid border rounded-3 shadow-lg mb-4 center"
+                        alt="lsad" width="500" loading="lazy">
+                </div>
+            </div>
+            {%endif%}
+        </div>
+
+
     </div>
-  </div>
-</div>
 
-{% endblock %}
+    {% endfor %}
+    <div class="container d-flex justify-content-center mt-3 mb-3">
+        {% include "pagination.html" with page=posts %}
+    </div>
+    {% endblock %}
