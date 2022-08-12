@@ -9,7 +9,7 @@ from .models import Post, Comment
 
 def HomeView(request):
     objects = Post.objects.all().order_by('-create_date_post')
-    paginator = Paginator(objects, 3)
+    paginator = Paginator(objects, 5)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
