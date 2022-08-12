@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load poll_extras %}
+{% load static %}
+<form>
+  <div class="modal-dialog py-5 my-5" role="document">
+    <div class="modal-content rounded-3 shadow">
+      <div class="modal-body p-4 text-center">
+        <h5 class="mb-0">Delete account?</h5>
+        <p class="mb-0">Are you sure you want to delete your account?</p>
+      </div>
+      <div class="modal-footer flex-nowrap p-0">
+        <div class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"><strong><a
+              href="{% url 'user_delete' user.id %}">Yes</strong>
+        </div>
+        </a>
+        <div class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 "><strong><a
+              href="{% url 'HomeView' %}">No thanks</strong>
+        </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

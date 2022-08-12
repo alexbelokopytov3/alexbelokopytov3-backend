@@ -1,15 +1,16 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .forms import Login, Registration, UserEdit, ProfileEdit
 from .models import Profile
 from home.views import HomeView
+from home.models import Post
 
 def Authentication(request):
-
     if request.method == 'POST':
         if 'sign_in' in request.POST:
             form = Login(request.POST)
@@ -41,6 +42,19 @@ def Authentication(request):
         form = Login()
     return render(request, 'authentication/authentication.html', {'form': form, 'reg_form': reg_form})
 
+@login_required
+def User_delete_form(request, id):
+    return render(request, 'profile/delete.html')
+
+@login_required
+def User_delete(request, id):
+    user = User.objects.get(id=id)
+    if request.user == user:
+        logout(request)
+        user.delete()
+        return redirect('HomeView')
+    else:
+        return redirect('HomeView')
 
 @login_required
 def Logout(request):
@@ -59,4 +73,20 @@ def Edit(request):
     else:
         user_form = UserEdit(instance=request.user)
         profile_form = ProfileEdit(instance=request.user.profile)
-        return render(request, 'profile/edit_profile.html', {'user_form':user_form, 'profile_form':profile_form})
+        return render(request, 'profile/edit.html', {'user_form':user_form, 'profile_form':profile_form})
+
+
+def Profile_view(request, id):
+    user_ = get_object_or_404(User, id=id)
+    profile = get_object_or_404(Profile, user=user_)
+    objects = Post.objects.filter(author_post=id).order_by('-create_date_post')
+    paginator = Paginator(objects, 3)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    
+    return render(request, 'profile/view.html', {'page': page, 'posts': posts, 'user_': user_, 'profile': profile})

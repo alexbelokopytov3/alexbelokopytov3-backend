@@ -19,13 +19,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-from home.views import HomeView
+from home.views import HomeView, EconomicsView, ScienceView, SportView, OtherView
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView, name = 'HomeView'),
+    re_path(r'^science', ScienceView, name = 'ScienceView'),
+    re_path(r'^economics', EconomicsView, name = 'EconomicsView'),
+    re_path(r'^sport', SportView, name = 'SportView'),
+    re_path(r'^other', OtherView, name = 'OtherView'),
     re_path(r'^account/', include('users.urls')),
     re_path(r'^post/', include('home.urls')),
 ]

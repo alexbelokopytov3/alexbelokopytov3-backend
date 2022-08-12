@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post
+from .models import Post, Comment
 
 
 
@@ -14,3 +14,8 @@ class PostView(forms.ModelForm):
             'text_post',
             'image_posts', 
             )
+
+class CommentView(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('comment_text',)

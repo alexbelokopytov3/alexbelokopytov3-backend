@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
 {% load poll_extras %}
 <div class="container">
     <h1>Edit post</h1>
+    <figcaption class="blockquote-footer mt-0">
+        <a href="{% url 'post_delete' post.id %}">click to delite</a>
+    </figcaption>
     <p>You can edit your post using the following form:</p>
 </div>
 <form action="." method="post" enctype="multipart/form-data">
-
     <div class="container">
         <div class="row">
             <div class="col-9">

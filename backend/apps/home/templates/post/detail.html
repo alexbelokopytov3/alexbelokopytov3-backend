@@ -1,16 +1,13 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
+{% load poll_extras %}
 <div class="container d-flex justify-content-center">
-
-    {% comment %} <div class="px-5 pt-1 my-4 border-bottom mt-5"> {% endcomment %}
-        <div class="w-75 ">
+    <div class="w-75 ">
         <h2 class="display-8 ">{{ post.title_post }}</h2>
         <figcaption class="blockquote-footer mt-0">
             {% if post.author_post %}
-            {{ post.author_post }} ({{ post.create_date_post }})
+            <a href="{% url 'profile_view' post.author_post.id %} ">{{ post.author_post }} </a>
+            ({{ post.create_date_post }})
             {% else %}
             {{ post.create_date_post }}
             {% endif %}
@@ -24,16 +21,54 @@
         </div>
 
         {% if post.image_posts %}
-        <div class="overflow-hidden" >
+        <div class="overflow-hidden">
             <div class="container text-center px-5">
-                <img src="{{post.image_posts.url}}" class="img-fluid border rounded-3 shadow-lg mb-4 center" alt="lsad" width="500" loading="lazy">
+                <img src="{{post.image_posts.url}}" class="img-fluid border rounded-3 shadow-lg mb-4 center" alt="lsad"
+                    width="500" loading="lazy">
             </div>
         </div>
         {%endif%}
+
+        {% with comments.count as total_comments %}
+        {% if total_comments > 1 %}
+        <h2>
+            {{ total_comments  }} comments
+        </h2>
+        {% else %}
+        <h2>
+            {{ total_comments  }} comment
+        </h2>
+        {% endif %}
+        {% endwith %}
+
+        {% for comment in comments %}
+        <div class="comment">
+            <figcaption class="blockquote-footer mt-0">
+                Comment by <a
+                    href="{% url 'profile_view' comment.comment_author.id %} ">{{ comment.comment_author }}</a>
+                ({{ comment.comment_create_date }})
+                {% if comment.comment_author == user %}
+                <a href="{% url 'comment_delete' comment.id %}">click to delite</a>
+                {% endif %}
+            </figcaption>
+            {{ comment.comment_text|linebreaks }}
+        </div>
+        {% empty %}
+        <p>There are no comments yet.</p>
+        {% endfor %}
+
+        {% if user.is_authenticated%}
+        <h2>Add a new comment</h2>
+        <form action="." method="post">
+            <div class="col-sm-12 mb-4">
+                {{ comment_form.comment_text|add_class:"form-control" }}
+            </div>
+            {% csrf_token %}
+            <div class="col-sm-2 mb-4 ">
+                <input type="submit" value="Add comment" class="form-control">
+            </div>
+        </form>
+        {% endif%}
     </div>
-
-
 </div>
-
-
 {% endblock %}
